@@ -25,7 +25,7 @@ export default [
     // 预留主页
     path: '/',
     name: 'main',
-    redirect: 'home',
+    component: () => import(/* webpackChunkName: 'main' */ '@/views/main/Main.vue'),
   },
   {
     path: '/home',

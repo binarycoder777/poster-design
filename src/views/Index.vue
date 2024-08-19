@@ -145,9 +145,9 @@ const beforeUnload = function (e: Event): any {
 !_config.isDev && window.addEventListener('beforeunload', beforeUnload)
 
 function jump2home() {
-  // const fullPath = window.location.href.split('/')
+  const fullPath = window.location.hostname;
   // window.open(fullPath[0] + '//' + fullPath[2])
-  window.open('https://xp.palxp.cn/')
+  window.open('/');
 }
 
 const undoable = computed(() => {

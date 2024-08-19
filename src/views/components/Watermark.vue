@@ -17,6 +17,6 @@ const baseStore = useBaseStore()
 const wmBollean = ref(false)
 
 function wmChange(isRemove: string | number | boolean) {
-  baseStore.changeWatermark(isRemove ? '' : ['迅排设计', 'poster-design'])
+  baseStore.changeWatermark(isRemove ? '' : ['礼尚往来', 'invitation-design'])
 }
 </script>

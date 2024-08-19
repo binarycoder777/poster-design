@@ -11,23 +11,27 @@
     <template v-if="tempEditing">
       <!-- <span style="color: #999; font-size: 14px; margin-right: 0.5rem">{{ state.stateBollean ? '启用' : '停用' }}</span> <el-switch v-model="state.stateBollean" @change="stateChange" />
       <div class="divide__line">|</div> -->
-      <el-button plain type="primary" @click="saveTemp">保存模板</el-button>
+      <el-button plain type="primary" @click="saveTemp">保存请帖</el-button>
       <el-button @click="userStore.managerEdit(false)">取消</el-button>
       <!-- <el-button @click="$store.commit('managerEdit', false)">取消</el-button> -->
       <div class="divide__line">|</div>
     </template>
-    <el-button v-else style="margin-right: 1rem" @click="jump2Edit">修改模板</el-button>
+    <el-button v-else @click="jump2Edit">修改请帖</el-button>
+    <el-button style="margin-right: 1rem" @click="jump3Edit">发起邀请</el-button>
     <watermark-option style="margin-right: 0.5rem" />
     <!-- <copyRight> -->
     <slot />
-    <!-- <el-button :loading="state.loading" size="large" class="primary-btn" :disabled="tempEditing" plain type="primary" @click="download">下载作品</el-button> -->
+    <!-- <el-button type="primary" @click="shareInvitation">发起邀请</el-button> -->
     <!-- </copyRight> -->
+    <ElAvatar :size="50" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"/>
   </div>
   <!-- 生成图片组件 -->
   <SaveImage ref="canvasImage" />
 </template>
 
 <script lang="ts" setup>
+import { ElAvatar } from 'element-plus'
+
 import api from '@/api'
 import { reactive, toRefs, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'

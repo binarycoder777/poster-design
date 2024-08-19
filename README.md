@@ -1,4 +1,4 @@
-<h2 align="center">迅排设计 - Poster Design</h2>
+<h2 align="center">礼尚往来 - Poster Design</h2>
 
 <p align="center">
 <a href=""><img src="https://img.shields.io/github/stars/palxiao/poster-design?style=flat" alt="starts"></a>
