@@ -2,18 +2,20 @@
 
 <script setup lang="ts">
 import { ElCalendar } from 'element-plus'
+import { Calendar, Search } from '@element-plus/icons-vue'
+import InvitationList from './InvitationList.vue';
 </script>
 
 <template>
-  <div id="pane">
+  <div id="pane" >
     <div id="webcrumbs">
-      <div className="w-[1300px] shadow rounded-lg bg-neutral-50">
-        <div className="bg-cover bg-center p-8 rounded-t-lg" style="background-image: url('../../../public/backend.png')">
-          <div className="flex justify-between items-center">
-            <h1 className="text-white font-title text-3xl">今天你想设计什么?</h1>
-            <div className="space-x-4">
-              <button className="text-white border border-white rounded-md px-4 py-2">本月随礼: ￥200</button>
-              <button className="text-white border border-white rounded-md px-4 py-2">本月收礼: ￥300</button>
+      <div class="w-[1300px] shadow rounded-lg bg-neutral-50">
+        <div class="bg-cover bg-center p-8 rounded-t-lg" style="background-image: url('../../../public/backend.png')">
+          <div class="flex justify-between items-center">
+            <h1 class="text-white font-title text-3xl">今天你随礼 | 收礼了吗？</h1>
+            <div class="space-x-4">
+              <button class="text-white border border-white rounded-md px-4 py-2">去随礼</button>
+              <button class="text-white border border-white rounded-md px-4 py-2">去送礼</button>
             </div>
           </div>
         </div>
@@ -32,11 +34,11 @@ import { ElCalendar } from 'element-plus'
               </template>
             </ElCalendar>
             </div>
-          </div>
-      <div className="w-full mt-8 relative">
-        <input type="text" placeholder="搜索模版或你的设计" className="w-full py-3 pl-10 pr-4 rounded-full shadow-sm border-none focus:ring-0" />
-        <span className="material-symbols-outlined absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500">search</span>
       </div>
+      <div class="search-invitation">
+      <InvitationList></InvitationList>
+      </div>
+      
     </div>
   </div>
 </template>
@@ -48,147 +50,35 @@ import { ElCalendar } from 'element-plus'
 
 @import url(https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200);
 
+
+.echarts {
+  margin-top: 40px;
+}
+
+#pane {
+  min-height: 100vh; /* 确保页面最小高度为视口高度 */
+}
+
+#webcrumbs {
+  overflow: auto; /* 确保内容超出时显示滚动条 */
+}
+
 /*! tailwindcss v3.4.3 | MIT License | https://tailwindcss.com*/
 .event {
-  margin-top: 20px;
   display: flex;
   flex-direction: row;
   justify-items: center;
   justify-content: center;
   gap: 30px;
+  /* overflow: auto; 处理溢出 */
 }
 
 .calendar {
   max-width: 50%;
-  height: 100px;
+  height: 100%;
 }
 
-.el-calendar-table .el-calendar-day{
-    width: 60px !important;
-    height: 40px !important;
-  }
 
-*,
-:after,
-:before {
-  border: 0 solid #e5e7eb;
-  box-sizing: border-box;
-}
-:after,
-:before {
-  --tw-content: '';
-}
-:host,
-html {
-  line-height: 1.5;
-  -webkit-text-size-adjust: 100%;
-  font-family: Open Sans, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-  font-feature-settings: normal;
-  font-variation-settings: normal;
-  -moz-tab-size: 4;
-  tab-size: 4;
-  -webkit-tap-highlight-color: transparent;
-}
-body {
-  line-height: inherit;
-  margin: 0;
-}
-hr {
-  border-top-width: 1px;
-  color: inherit;
-  height: 0;
-}
-abbr:where([title]) {
-  text-decoration: underline dotted;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-size: inherit;
-  font-weight: inherit;
-}
-a {
-  color: inherit;
-  text-decoration: inherit;
-}
-b,
-strong {
-  font-weight: bolder;
-}
-code,
-kbd,
-pre,
-samp {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
-  font-feature-settings: normal;
-  font-size: 1em;
-  font-variation-settings: normal;
-}
-small {
-  font-size: 80%;
-}
-sub,
-sup {
-  font-size: 75%;
-  line-height: 0;
-  position: relative;
-  vertical-align: baseline;
-}
-sub {
-  bottom: -0.25em;
-}
-sup {
-  top: -0.5em;
-}
-table {
-  border-collapse: collapse;
-  border-color: inherit;
-  text-indent: 0;
-}
-button,
-input,
-optgroup,
-select,
-textarea {
-  color: inherit;
-  font-family: inherit;
-  font-feature-settings: inherit;
-  font-size: 100%;
-  font-variation-settings: inherit;
-  font-weight: inherit;
-  letter-spacing: inherit;
-  line-height: inherit;
-  margin: 0;
-  padding: 0;
-}
-button,
-select {
-  text-transform: none;
-}
-button,
-input:where([type='button']),
-input:where([type='reset']),
-input:where([type='submit']) {
-  -webkit-appearance: button;
-  background-color: transparent;
-  background-image: none;
-}
-:-moz-focusring {
-  outline: auto;
-}
-:-moz-ui-invalid {
-  box-shadow: none;
-}
-progress {
-  vertical-align: baseline;
-}
-::-webkit-inner-spin-button,
-::-webkit-outer-spin-button {
-  height: auto;
-}
 [type='search'] {
   -webkit-appearance: textfield;
   outline-offset: -2px;
@@ -200,44 +90,8 @@ progress {
   -webkit-appearance: button;
   font: inherit;
 }
-summary {
-  display: list-item;
-}
-blockquote,
-dd,
-dl,
-figure,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-hr,
-p,
-pre {
-  margin: 0;
-}
-fieldset {
-  margin: 0;
-}
-fieldset,
-legend {
-  padding: 0;
-}
-menu,
-ol,
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-dialog {
-  padding: 0;
-}
-textarea {
-  resize: vertical;
-}
+
+
 input::placeholder,
 textarea::placeholder {
   color: #9ca3af;
@@ -250,79 +104,15 @@ button {
 :disabled {
   cursor: default;
 }
-audio,
-canvas,
-embed,
-iframe,
-img,
-object,
-svg,
-video {
-  display: block;
-  vertical-align: middle;
-}
-img,
-video {
-  height: auto;
-  max-width: 100%;
-}
-[hidden] {
-  display: none;
-}
-*,
+
 :after,
 :before {
-  --tw-border-spacing-x: 0;
-  --tw-border-spacing-y: 0;
-  --tw-translate-x: 0;
-  --tw-translate-y: 0;
-  --tw-rotate: 0;
-  --tw-skew-x: 0;
-  --tw-skew-y: 0;
-  --tw-scale-x: 1;
-  --tw-scale-y: 1;
-  --tw-pan-x: ;
-  --tw-pan-y: ;
-  --tw-pinch-zoom: ;
-  --tw-scroll-snap-strictness: proximity;
-  --tw-gradient-from-position: ;
-  --tw-gradient-via-position: ;
-  --tw-gradient-to-position: ;
-  --tw-ordinal: ;
-  --tw-slashed-zero: ;
-  --tw-numeric-figure: ;
-  --tw-numeric-spacing: ;
-  --tw-numeric-fraction: ;
-  --tw-ring-inset: ;
-  --tw-ring-offset-width: 0px;
   --tw-ring-offset-color: #fff;
   --tw-ring-color: rgba(59, 130, 246, 0.5);
   --tw-ring-offset-shadow: 0 0 #0000;
   --tw-ring-shadow: 0 0 #0000;
   --tw-shadow: 0 0 #0000;
   --tw-shadow-colored: 0 0 #0000;
-  --tw-blur: ;
-  --tw-brightness: ;
-  --tw-contrast: ;
-  --tw-grayscale: ;
-  --tw-hue-rotate: ;
-  --tw-invert: ;
-  --tw-saturate: ;
-  --tw-sepia: ;
-  --tw-drop-shadow: ;
-  --tw-backdrop-blur: ;
-  --tw-backdrop-brightness: ;
-  --tw-backdrop-contrast: ;
-  --tw-backdrop-grayscale: ;
-  --tw-backdrop-hue-rotate: ;
-  --tw-backdrop-invert: ;
-  --tw-backdrop-opacity: ;
-  --tw-backdrop-saturate: ;
-  --tw-backdrop-sepia: ;
-  --tw-contain-size: ;
-  --tw-contain-layout: ;
-  --tw-contain-paint: ;
-  --tw-contain-style: ;
 }
 ::backdrop {
   --tw-border-spacing-x: 0;
@@ -334,19 +124,7 @@ video {
   --tw-skew-y: 0;
   --tw-scale-x: 1;
   --tw-scale-y: 1;
-  --tw-pan-x: ;
-  --tw-pan-y: ;
-  --tw-pinch-zoom: ;
   --tw-scroll-snap-strictness: proximity;
-  --tw-gradient-from-position: ;
-  --tw-gradient-via-position: ;
-  --tw-gradient-to-position: ;
-  --tw-ordinal: ;
-  --tw-slashed-zero: ;
-  --tw-numeric-figure: ;
-  --tw-numeric-spacing: ;
-  --tw-numeric-fraction: ;
-  --tw-ring-inset: ;
   --tw-ring-offset-width: 0px;
   --tw-ring-offset-color: #fff;
   --tw-ring-color: rgba(59, 130, 246, 0.5);
@@ -354,69 +132,17 @@ video {
   --tw-ring-shadow: 0 0 #0000;
   --tw-shadow: 0 0 #0000;
   --tw-shadow-colored: 0 0 #0000;
-  --tw-blur: ;
-  --tw-brightness: ;
-  --tw-contrast: ;
-  --tw-grayscale: ;
-  --tw-hue-rotate: ;
-  --tw-invert: ;
-  --tw-saturate: ;
-  --tw-sepia: ;
-  --tw-drop-shadow: ;
-  --tw-backdrop-blur: ;
-  --tw-backdrop-brightness: ;
-  --tw-backdrop-contrast: ;
-  --tw-backdrop-grayscale: ;
-  --tw-backdrop-hue-rotate: ;
-  --tw-backdrop-invert: ;
-  --tw-backdrop-opacity: ;
-  --tw-backdrop-saturate: ;
-  --tw-backdrop-sepia: ;
-  --tw-contain-size: ;
-  --tw-contain-layout: ;
-  --tw-contain-paint: ;
-  --tw-contain-style: ;
 }
-#webcrumbs :is(.absolute) {
-  position: absolute;
-}
-#webcrumbs :is(.relative) {
-  position: relative;
-}
-#webcrumbs :is(.left-4) {
-  left: 16px;
-}
-#webcrumbs :is(.top-1\/2) {
-  top: 50%;
-}
-#webcrumbs :is(.mb-4) {
-  margin-bottom: 16px;
-}
-#webcrumbs :is(.mt-2) {
-  margin-top: 8px;
-}
-#webcrumbs :is(.mt-8) {
-  margin-top: 32px;
-}
-#webcrumbs :is(.flex) {
+
+.flex {
   display: flex;
-}
-#webcrumbs :is(.w-\[1300px\]) {
-  width: 100%;
+  overflow: auto; /* 处理溢出 */
+
 }
 #webcrumbs :is(.w-full) {
   width: 100%;
 }
-#webcrumbs :is(.-translate-y-1\/2) {
-  --tw-translate-y: -50%;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-#webcrumbs :is(.transform) {
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-#webcrumbs :is(.flex-col) {
-  flex-direction: column;
-}
+
 #webcrumbs :is(.items-center) {
   align-items: center;
 }
@@ -447,54 +173,7 @@ video {
 #webcrumbs :is(.border) {
   border-width: 1px;
 }
-#webcrumbs :is(.border-none) {
-  border-style: none;
-}
-#webcrumbs :is(.border-white) {
-  --tw-border-opacity: 1;
-  border-color: rgb(255 255 255 / var(--tw-border-opacity));
-}
-#webcrumbs :is(.bg-blue-500) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
-}
-#webcrumbs :is(.bg-gray-500) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
-}
-#webcrumbs :is(.bg-gray-700) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(55 65 81 / var(--tw-bg-opacity));
-}
-#webcrumbs :is(.bg-green-500) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(34 197 94 / var(--tw-bg-opacity));
-}
-#webcrumbs :is(.bg-neutral-50) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-#webcrumbs :is(.bg-orange-500) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(249 115 22 / var(--tw-bg-opacity));
-}
-#webcrumbs :is(.bg-pink-500) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(236 72 153 / var(--tw-bg-opacity));
-}
-#webcrumbs :is(.bg-purple-500) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
-}
-#webcrumbs :is(.bg-purple-700) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(126 34 206 / var(--tw-bg-opacity));
-}
-#webcrumbs :is(.bg-red-500) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
-}
-#webcrumbs :is(.bg-cover) {
+:is(.bg-cover) {
   background-size: cover;
 }
 #webcrumbs :is(.bg-center) {

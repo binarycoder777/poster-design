@@ -6,7 +6,7 @@ import Pane from './Pane.vue'
 <template>
   <el-row>
     <el-col class="pane" :span="24">
-      <Pane></Pane>
+        <Pane></Pane>
     </el-col>
   </el-row>
   <el-row>
@@ -28,9 +28,11 @@ import Pane from './Pane.vue'
     <el-col :span="4"><div class="grid-content ep-bg-purple" /></el-col>
     <el-col :span="4"><div class="grid-content ep-bg-purple-light" /></el-col>
   </el-row>
+
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
+
 .pane {
   max-width: 100%;
 }

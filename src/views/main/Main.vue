@@ -25,7 +25,7 @@ import MainBody from '../components/MainBody.vue'
         </el-aside>
         <el-container>
           <el-main>
-            <div class="main-body">
+            <div class="main-body" style="overflow: auto;">
               <MainBody>
               </MainBody>
             </div>
@@ -38,11 +38,23 @@ import MainBody from '../components/MainBody.vue'
 </template>
 
 <style scoped>
+
+
 .main-header .main-body{
   margin-top: 20px;
 }
 
 .main-asider {
   margin-top: 20px;
+}
+
+.el-main {
+  height: 100vh; /* 设置主容器高度 */
+  overflow: hidden; /* 防止外部滚动 */
+}
+
+.main-body {
+  height: 100%; /* 确保占满主容器 */
+  overflow: auto; /* 处理溢出 */
 }
 </style>
