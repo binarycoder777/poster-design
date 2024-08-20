@@ -31,7 +31,7 @@ const handleClose = (key: string, keyPath: string[]) => {
           <el-icon><icon-menu /></el-icon>
           <span>首页</span>
         </el-menu-item>
-        <el-menu-item index="3">
+        <el-menu-item index="2">
           <el-icon><Edit /></el-icon>
           <span>我的账本</span>
         </el-menu-item>
@@ -39,7 +39,7 @@ const handleClose = (key: string, keyPath: string[]) => {
           <el-icon><User /></el-icon>
           <span>人情往来</span>
         </el-menu-item>
-        <el-menu-item index="2">
+        <el-menu-item index="4">
           <el-icon><document /></el-icon>
           <span>个人请帖</span>
         </el-menu-item>
