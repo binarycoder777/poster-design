@@ -1,14 +1,24 @@
 <script setup>
+
+import AccountBook from './AccountBook.vue'
+
 import { ref } from 'vue';
 
 const categories = ref([
   "文学", "历史", "科学", "艺术", "技术", "旅游", "教育", "社会","更多"
 ]);
+
+const isActive = ref(true)
+
+function openAccountBook(id) {
+  isActive.value = false;
+}
+
 </script>
 
 
 <template>
-  <div id="webcrumbs"> 
+  <div id="webcrumbs" v-if="isActive"> 
     <div class="w-[1300px] shadow rounded-lg bg-neutral-50">
       <div
         class="bg-cover bg-center p-8 rounded-t-lg"
@@ -37,7 +47,7 @@ const categories = ref([
           <p class="font-title text-xl">总数: 123本书</p>
         </div>
         <div class="grid grid-cols-4 gap-4">
-          <div v-for="(category, index) in categories" :key="index" class="bg-neutral-100 rounded-md flex flex-col items-center shadow relative p-4">
+          <div v-for="(category, index) in categories" :key="index" class="bg-neutral-100 rounded-md flex flex-col items-center shadow relative p-4"  @click="openAccountBook(1)">
             <img
               :src="`https://tools-api.webcrumbs.org/image-placeholder/150/200/book/${index + 1}`"
               :alt="category"
@@ -49,6 +59,8 @@ const categories = ref([
       </div>
     </div> 
   </div>
+  <AccountBook v-else>
+  </AccountBook>
 </template>
 
 <style scoped>

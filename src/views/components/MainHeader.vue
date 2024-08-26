@@ -70,4 +70,8 @@ import { Setting,Bell,Iphone } from '@element-plus/icons-vue'
   align-content: center;
   gap: 20px;
 }
+
+.el-menu {
+  border-bottom: 0 !important;
+}
 </style>
