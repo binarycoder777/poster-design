@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ElRow, ElCol } from 'element-plus'
-import Pane from './Pane.vue'
+import Pane from './homepage/Pane.vue'
 </script>
 
 <template>
@@ -9,26 +9,6 @@ import Pane from './Pane.vue'
         <Pane></Pane>
     </el-col>
   </el-row>
-  <el-row>
-    <el-col :span="16"><div class="grid-content ep-bg-purple" /></el-col>
-    <el-col :span="8">
-    </el-col>
-  </el-row>
-  <el-row>
-    <el-col :span="6"><div class="grid-content ep-bg-purple" /></el-col>
-    <el-col :span="6"><div class="grid-content ep-bg-purple-light" /></el-col>
-    <el-col :span="6"><div class="grid-content ep-bg-purple" /></el-col>
-    <el-col :span="6"><div class="grid-content ep-bg-purple-light" /></el-col>
-  </el-row>
-  <el-row>
-    <el-col :span="4"><div class="grid-content ep-bg-purple" /></el-col>
-    <el-col :span="4"><div class="grid-content ep-bg-purple-light" /></el-col>
-    <el-col :span="4"><div class="grid-content ep-bg-purple" /></el-col>
-    <el-col :span="4"><div class="grid-content ep-bg-purple-light" /></el-col>
-    <el-col :span="4"><div class="grid-content ep-bg-purple" /></el-col>
-    <el-col :span="4"><div class="grid-content ep-bg-purple-light" /></el-col>
-  </el-row>
-
 </template>
 
 <style scoped lang="scss">

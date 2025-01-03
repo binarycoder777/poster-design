@@ -1,4 +1,6 @@
 import { createApp } from 'vue'
+import ElementPlus from 'element-plus'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import App from './App.vue'
 import router from './router'
 import utils from './utils'
@@ -12,12 +14,19 @@ const pinia = createPinia()
 const app = createApp(App)
 
 elementConfig.components.forEach((component) => {
-  app.component(component.name, component)
+  if (component.name) {
+    app.component(component.name, component)
+  }
 })
 
 elementConfig.plugins.forEach((plugin) => {
   app.use(plugin)
 })
+
+// 注册所有图标
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  app.component(key, component)
+}
 
 app
   // .use(store)
@@ -25,4 +34,5 @@ app
   .use(router)
   .use(utils)
   .use(I18n)
+  .use(ElementPlus)
   .mount('#app')

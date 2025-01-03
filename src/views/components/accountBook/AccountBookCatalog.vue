@@ -38,7 +38,7 @@ onMounted(() => {
             <p>xxx与YYY的婚宴于yyyy-MM-dd在某某大酒店举行...</p>
           </div>
         </div>
-        <div ref="containerRef" style="max-height: 600px; overflow-y: auto">
+        <div ref="containerRef" style="max-height: 300px; overflow-y: auto">
           <div v-for="(partKey, index) in partKeyArray" :key="index" :id="partKey" style="height: 100px; background: rgba(255, 0, 0, 0.02); margin-top: 30px">{{ partKey }}</div>
         </div>
       </el-col>
@@ -52,6 +52,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
+
 .catalog-title{
   display: flex;
   flex-grow: 2;

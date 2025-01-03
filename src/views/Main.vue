@@ -1,28 +1,32 @@
 <script setup lang="ts">
 import { ElContainer, ElHeader, ElAside, ElMain, ElFooter, ElIcon, ElMenu, ElMenuItem, ElSubMenu } from 'element-plus'
 import { Document, Menu as IconMenu, User, Edit } from '@element-plus/icons-vue'
+import { defineAsyncComponent } from 'vue'
 
-import MainHeader from '../components/MainHeader.vue'
-import MainBody from '../components/MainBody.vue'
-import AccountBookBody from '../components/AccountBookBody.vue'
+// 使用defineAsyncComponent动态导入组件
+const MainHeader = defineAsyncComponent(() => import('./components/MainHeader.vue'))
+const MainBody = defineAsyncComponent(() => import('./components/MainBody.vue'))
+const AccountBookBody = defineAsyncComponent(() => import('./components/AccountBookBody.vue'))
+const ContactsPage = defineAsyncComponent(() => import('./components/ContactsPage.vue'))
+const InvitationPage = defineAsyncComponent(() => import('./components/InvitationPage.vue'))
 
-import { ref } from 'vue'
+import { ref, markRaw } from 'vue'
 
 // asidebar与content的映射
 const menuConfig = {
   defaultActive: 1,
   items: [
-    { index: '1', title: '首页', component: MainBody, icon: IconMenu },
-    { index: '2', title: '我的账本', component: AccountBookBody, icon: Document },
-    { index: '3', title: '人情来往', component: 'ContactsPage', icon: User },
-    { index: '4', title: '个人请帖', component: 'InvitationPage', icon: Edit },
+    { index: '1', title: '首页', component: markRaw(MainBody), icon: IconMenu },
+    { index: '2', title: '我的账本', component: markRaw(AccountBookBody), icon: Document },
+    { index: '3', title: '人情来往', component: markRaw(ContactsPage), icon: User },
+    { index: '4', title: '个人请帖', component: markRaw(InvitationPage), icon: Edit },
   ],
 }
 
 const activeMenu = ref('1') // 默认激活的菜单项
 const activeComponent = ref(MainBody) // 默认显示的内容组件
 
-const handleSelect = (index) => {
+const handleSelect = (index: string) => {
   const selectedItem = menuConfig.items.find((item) => item.index === index)
   if (selectedItem) {
     activeMenu.value = index
