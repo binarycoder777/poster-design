@@ -24,6 +24,12 @@ export default [
   {
     // 预留主页
     path: '/',
+    name: 'login',
+    component: () => import(/* webpackChunkName: 'main' */ '@/views/LoginPage.vue'),
+  },
+  {
+    // 预留主页
+    path: '/main',
     name: 'main',
     component: () => import(/* webpackChunkName: 'main' */ '@/views/Main.vue'),
   },
