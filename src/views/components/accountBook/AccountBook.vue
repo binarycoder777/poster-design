@@ -2,10 +2,12 @@
 import { ElPopover, ElPagination, ElIcon, ElSkeleton, ElSkeletonItem, ElSubMenu, ElMenu, ElMenuItem, ElMenuItemGroup } from 'element-plus'
 
 import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
-import { Memo, Search, Edit, Download, Share, EditPen, Sunny, Notebook, Expand ,ArrowLeft} from '@element-plus/icons-vue'
+import { Memo, Search, Edit, Download, Share, EditPen, Sunny, Notebook, Expand ,ArrowLeft, Plus, Grid, Menu } from '@element-plus/icons-vue'
 
 import type { ComponentSize } from 'element-plus'
+import type { Component } from 'vue'
 
 // 自定义组件
 
@@ -42,13 +44,13 @@ const catalogConfig = {
 const dialogVisible = ref(false)
 
 const activeCatalog = ref('1') // 默认激活的菜单项
-const activeCatalogComponent = ref(AccountBookCatalog) // 默认显示的内容组件
+const activeCatalogComponent = ref<Component>(AccountBookCatalog) // 默认显示的内容组件
 
 const handleSelect = (index: string) => {
   const selectedItem = catalogConfig.items.find((item) => item.index === index)
   if (selectedItem) {
     activeCatalog.value = index
-    activeCatalogComponent.value = selectedItem.component
+    activeCatalogComponent.value = selectedItem.component as Component
     dialogVisible.value = true
   }
 }
@@ -70,131 +72,295 @@ const handleCurrentChange = (val: number) => {
 }
 
 // 返回到AccountBookBody组件
-const isShowAccountBook = ref(true)
+const emit = defineEmits(['back'])
 const handleBack = () => {
-  isShowAccountBook.value = false
+  emit('back')
+}
+
+const searchQuery = ref('')
+const viewType = ref('table')
+
+const activeComponent = ref<Component>(AccountBookCatalog)
+
+const dialogTitle = ref('')
+
+const menuItems = [
+  { index: '1', title: '新增', icon: Plus, component: SaveAccountBookItem },
+  { index: '2', title: '目录', icon: Memo, component: AccountBookCatalog },
+  { index: '3', title: '字号', icon: EditPen, component: AccountBookFont },
+  { index: '4', title: '主题', icon: Sunny, component: AccountBookTheme },
+  { index: '5', title: '下载', icon: Download, component: DownloadAccountBook },
+  { index: '6', title: '分析', icon: Share, component: ShareAccountBook }
+]
+
+const activeMenu = ref('1')
+
+const handleMenuClick = (item: any) => {
+  activeMenu.value = item.index
+  activeComponent.value = item.component as Component
+  dialogTitle.value = item.title
+  dialogVisible.value = true
+}
+
+const formatDate = (date: Date) => {
+  return date.toLocaleDateString('zh-CN', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })
+}
+
+const handleAdd = () => {
+  dialogTitle.value = '新增记录'
+  activeComponent.value = SaveAccountBookItem as Component
+  dialogVisible.value = true
 }
 </script>
 
 <template>
-  <AccountBookBody v-if="!isShowAccountBook" />
-  <div v-else class="container">
-    <!-- 返回按钮 -->
-    <div class="back-button">
-      <div style="display: flex; align-items: center; gap: 20px;">
-        <el-button class="custom-back-btn" type="primary" plain size="medium" @click="handleBack">
+  <div class="container">
+    <!-- 顶部导航区 -->
+    <header class="header">
+      <div class="header-left">
+        <el-button class="back-btn" @click="handleBack">
           <el-icon><ArrowLeft /></el-icon>
           返回
         </el-button>
-        <div class="header-info" style="display: flex; align-items: center; justify-content: center;">
-          <h1 class="title" style="margin: 0 20px 0 0; font-size: 24px; font-weight: 500;">张三的账本</h1>
-          <span class="date" style="font-size: 16px; color: #606266;">2024-01-20</span>
+        <div class="header-title">
+          <h1>账本详情</h1>
+          <span class="subtitle">{{ formatDate(new Date()) }}</span>
         </div>
       </div>
-    </div>
-    <div class="book-acount-container">
-      <!-- 账本内容 -->
-      <div class="content">
-        <Suspense>
-          <template #default>
-            <AccountBookContent />
-          </template>
-          <template #fallback>
-            <div class="loading-placeholder">
-              <el-skeleton :rows="10" animated />
+      <div class="header-right">
+        <el-button type="primary" @click="handleAdd">
+          <el-icon><Plus /></el-icon>
+          新增记录
+        </el-button>
+      </div>
+    </header>
+
+    <!-- 主要内容区 -->
+    <main class="main-content">
+      <!-- 左侧内容区 -->
+      <div class="content-wrapper">
+        <div class="content-header">
+          <div class="search-bar">
+            <el-input
+              v-model="searchQuery"
+              placeholder="搜索记录..."
+              prefix-icon="Search"
+              clearable
+            />
+          </div>
+          <div class="view-options">
+            <el-button-group>
+              <el-button :type="viewType === 'table' ? 'primary' : 'default'">
+                <el-icon><Grid /></el-icon>
+              </el-button>
+              <el-button :type="viewType === 'card' ? 'primary' : 'default'">
+                <el-icon><Menu /></el-icon>
+              </el-button>
+            </el-button-group>
+          </div>
+        </div>
+        
+        <div class="content-body">
+          <AccountBookContent />
+        </div>
+      </div>
+
+      <!-- 右侧边栏 -->
+      <aside class="sidebar">
+        <div class="sidebar-section">
+          <h3 class="sidebar-title">账本信息</h3>
+          <div class="info-list">
+            <div class="info-item">
+              <span class="label">总金额</span>
+              <span class="value">¥ 25,000.00</span>
             </div>
-          </template>
-        </Suspense>
-      </div>
-      <!-- 书签侧边栏 -->
-      <div class="book-asiderbar">
-        <div class="popContent">
-          <el-dialog v-model="dialogVisible" width="800">
-            <component :is="activeCatalogComponent" />
-          </el-dialog>
+            <div class="info-item">
+              <span class="label">记录数</span>
+              <span class="value">128</span>
+            </div>
+          </div>
         </div>
-        <el-menu :default-active="activeIndex" class="el-menu-demo" :ellipsis="false" @select="handleSelect">
-          <el-menu-item index="1">
-            <el-icon><Edit /></el-icon>
-            <template #title>新增</template>
-          </el-menu-item>
-          <el-menu-item index="2">
-            <el-icon><Memo /></el-icon>
-            <template #title>目录</template>
-          </el-menu-item>
-          <el-menu-item index="3">
-            <el-icon><EditPen /></el-icon>
-            <template #title>字号</template>
-          </el-menu-item>
-          <el-menu-item index="4">
-            <el-icon><Sunny /></el-icon>
-            <template #title>主题</template>
-          </el-menu-item>
-          <el-menu-item index="5">
-            <el-icon><Download /></el-icon>
-            <template #title>下载</template>
-          </el-menu-item>
-          <el-menu-item index="6">
-            <el-icon><Share /></el-icon>
-            <template #title>分享</template>
-          </el-menu-item>
-        </el-menu>
-      </div>
-    </div>
-    <!-- 翻页 -->
-    <div>
-      <el-pagination v-model:current-page="currentPage4" v-model:page-size="pageSize4" :page-sizes="[100, 200, 300, 400]" :size="size" :disabled="disabled" :background="background" layout="total, sizes, prev, pager, next, jumper" :total="400" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
-    </div>
+
+        <div class="sidebar-section">
+          <h3 class="sidebar-title">快捷操作</h3>
+          <el-menu
+            class="quick-actions"
+            :default-active="activeMenu"
+          >
+            <el-menu-item v-for="item in menuItems" 
+                          :key="item.index" 
+                          :index="item.index"
+                          @click="handleMenuClick(item)">
+              <el-icon><component :is="item.icon" /></el-icon>
+              <span>{{ item.title }}</span>
+            </el-menu-item>
+          </el-menu>
+        </div>
+      </aside>
+    </main>
+
+    <!-- 弹窗 -->
+    <el-dialog
+      v-model="dialogVisible"
+      :title="dialogTitle"
+      width="800px"
+      destroy-on-close
+    >
+      <component :is="activeComponent" />
+    </el-dialog>
   </div>
 </template>
 
 <style scoped>
 .container {
-  height: 100%;
-  overflow: auto;
-}
-
-.popContent {
+  height: 100vh;
+  background-color: #f8f9fa;
   display: flex;
-  justify-content: center; /* 水平居中 */
-  align-items: center; /* 垂直居中 */
+  flex-direction: column;
 }
 
-.el-pagination {
-  margin-top: 2%;
-  /* margin-bottom: 20px; */
+.header {
+  height: 64px;
+  padding: 0 32px;
+  background: white;
+  border-bottom: 1px solid #eaecef;
   display: flex;
-  justify-content: center; /* 水平居中 */
-  align-items: center; /* 垂直居中 */
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-.book-acount-container {
-  margin-top: 2%;
+.header-left {
   display: flex;
-  flex-direction: row;
+  align-items: center;
+  gap: 24px;
 }
 
-.content {
-  width: 90%;
-  height: 90%;
-  border: 2px solid #ccc;
-  border-radius: 15px; /* 圆角效果 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 阴影效果 */
+.back-btn {
+  border: none;
+  background: transparent;
+  &:hover {
+    background: #f5f5f5;
+  }
+}
+
+.header-title {
+  h1 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2329;
+    margin: 0;
+  }
+  .subtitle {
+    font-size: 13px;
+    color: #86909c;
+  }
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  gap: 24px;
+  padding: 24px;
+  min-height: 0;
+}
+
+.content-wrapper {
+  flex: 1;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.content-header {
+  padding: 16px 24px;
+  border-bottom: 1px solid #eaecef;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.search-bar {
+  width: 320px;
+}
+
+.content-body {
+  flex: 1;
+  min-height: 0;
+}
+
+.sidebar {
+  width: 280px;
+  flex-shrink: 0;
+}
+
+.sidebar-section {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
   padding: 20px;
-  background-color: white; /* 可选的背景颜色 */
+  margin-bottom: 16px;
 }
 
-.book-asiderbar {
+.sidebar-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2329;
+  margin: 0 0 16px 0;
+}
+
+.info-list {
   display: flex;
-  justify-content: center; /* 水平居中 */
-  align-items: center; /* 垂直居中 */
+  flex-direction: column;
+  gap: 12px;
 }
 
-.el-menu--horizontal > .el-menu-item:nth-child(1) {
-  margin-right: auto;
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  .label {
+    color: #86909c;
+    font-size: 14px;
+  }
+  
+  .value {
+    color: #1f2329;
+    font-weight: 500;
+  }
 }
 
-.el-menu {
-  border-right: 0 !important;
+.quick-actions {
+  border: none;
+  
+  :deep(.el-menu-item) {
+    height: 40px;
+    line-height: 40px;
+    border-radius: 6px;
+    margin: 4px 0;
+    
+    &:hover {
+      background-color: #f5f7fa;
+    }
+    
+    &.is-active {
+      background-color: #f0f7ff;
+      color: #1890ff;
+    }
+    
+    .el-icon {
+      margin-right: 12px;
+    }
+  }
 }
 </style>
