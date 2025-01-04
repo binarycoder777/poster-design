@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { ElInput, ElButton, ElCard, ElDialog, ElForm, ElFormItem, ElSelect, ElOption } from 'element-plus'
+import { ElInput, ElButton, ElCard, ElDialog, ElForm, ElFormItem, ElSelect, ElOption, ElMessage, ElMessageBox } from 'element-plus'
 import { Plus, Edit, Delete, Download } from '@element-plus/icons-vue'
 
 interface Invitation {
@@ -171,6 +171,11 @@ const handleDownload = (id: number) => {
 .draft {
   background: #f4f4f5;
   color: #909399;
+}
+
+.received {
+  background: #fdf6ec;
+  color: #e6a23c;
 }
 
 .card-content {
